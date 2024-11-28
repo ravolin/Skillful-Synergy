@@ -642,7 +642,7 @@ textarea:focus {
 
 /* Improve readability in light mode */
 .light-mode body {
-  background-color: #f5f5f0;
+  background-color: #f7f7da;
 }
 
 /* Transition for theme toggle */
