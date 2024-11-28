@@ -13,7 +13,7 @@
   --secondary: #333333;
   --accent: #00a86b;
   --accent-2: #0096a8;
-  --text: #000000;
+  --text: #333333;
   --glass-bg: rgba(0, 0, 0, 0.05);
   --glass-border: rgba(0, 0, 0, 0.1);
 }
@@ -642,7 +642,7 @@ textarea:focus {
 
 /* Improve readability in light mode */
 .light-mode body {
-  background-color: #f7f7da;
+  background-color: #b3b3b3;
 }
 
 /* Transition for theme toggle */
