@@ -45,10 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.remove('active');
       navToggle.classList.remove('active');
       body.classList.remove('nav-open');
-
       const targetId = this.getAttribute('href').substring(1);
       const targetElement = document.getElementById(targetId);
-
       if (targetElement) {
         targetElement.scrollIntoView({
           behavior: 'smooth',
@@ -68,6 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     body.classList.add('light-mode');
+  } else if (savedTheme === 'dark') {
+    body.classList.remove('light-mode');
+  } else {
+    // If no saved preference, check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      body.classList.remove('light-mode');
+    } else {
+      body.classList.add('light-mode');
+    }
   }
 
   // Fetch blog posts
@@ -124,13 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Holographic gradient effect
   function setupHolographicGradient() {
     const holographicElements = document.querySelectorAll('.holographic-gradient');
-
     holographicElements.forEach(element => {
       element.addEventListener('mousemove', (e) => {
         const rect = element.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
         element.style.setProperty('--mouse-x', `${x}px`);
         element.style.setProperty('--mouse-y', `${y}px`);
       });
@@ -161,142 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Particle effect
-  function createParticles() {
-    const particlesContainer = document.createElement('div');
-    particlesContainer.classList.add('particles');
-    document.body.appendChild(particlesContainer);
-
-    for (let i = 0; i < 50; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      particle.style.left = `${Math.random() * 100}vw`;
-      particle.style.top = `${Math.random() * 100}vh`;
-      particle.style.width = `${Math.random() * 5 + 1}px`;
-      particle.style.height = particle.style.width;
-      particlesContainer.appendChild(particle);
-
-      animateParticle(particle);
-    }
-  }
-
-  function animateParticle(particle) {
-    const animationDuration = Math.random() * 20 + 10;
-    const animationDelay = Math.random() * 10;
-
-    particle.animate(
-      [
-        { transform: 'translate(0, 0)' },
-        { transform: `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)` }
-      ],
-      {
-        duration: animationDuration * 1000,
-        delay: animationDelay * 1000,
-        iterations: Infinity,
-        direction: 'alternate',
-        easing: 'ease-in-out'
-      }
-    );
-  }
-
-  // Reveal animation for section titles
-  function setupRevealAnimation() {
-    const sectionTitles = document.querySelectorAll('.section-title');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    sectionTitles.forEach(title => {
-      title.style.opacity = '0';
-      observer.observe(title);
-    });
-  }
-
-  // Tilt effect for trainer cards
-  function setupTiltEffect() {
-    const trainerCards = document.querySelectorAll('.trainer-card');
-
-    trainerCards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-      });
-    });
-  }
-
-  // Animated counter for statistics
-  function setupAnimatedCounter() {
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200;
-
-    const animateCounter = (counter) => {
-      const target = +counter.getAttribute('data-target');
-      let count = 0;
-      const inc = target / speed;
-
-      const updateCount = () => {
-        if (count < target) {
-          count += inc;
-          counter.innerText = Math.ceil(count);
-          setTimeout(updateCount, 1);
-        } else {
-          counter.innerText = target;
-        }
-      };
-
-      updateCount();
-    };
-
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    counters.forEach(counter => {
-      counterObserver.observe(counter);
-    });
-  }
-
-  // Typewriter effect for hero subtitle
-  function setupTypewriterEffect() {
-    const subtitle = document.querySelector('.hero .subtitle');
-    const text = subtitle.textContent;
-    subtitle.textContent = '';
-    let i = 0;
-
-    function typeWriter() {
-      if (i < text.length) {
-        subtitle.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-      }
-    }
-
-    typeWriter();
-  }
-
   // Initialize all functions
   function init() {
     fetchBlogPosts();
@@ -304,11 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     parallaxEffect();
     setupHolographicGradient();
     setupFormSubmission();
-    createParticles();
-    setupRevealAnimation();
-    setupTiltEffect();
-    setupAnimatedCounter();
-    setupTypewriterEffect();
   }
 
   init();
