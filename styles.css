@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
   --primary: #000000;
   --secondary: #ffffff;
@@ -6,6 +8,16 @@
   --text: #e0e0e0;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
+  --holographic-dark: linear-gradient(45deg, 
+      rgba(0, 255, 255, 0.5), 
+      rgba(255, 0, 255, 0.5), 
+      rgba(255, 255, 0, 0.5), 
+      rgba(0, 255, 255, 0.5));
+  --holographic-light: linear-gradient(45deg, 
+      rgba(255, 255, 255, 0.8), 
+      rgba(200, 200, 255, 0.8), 
+      rgba(255, 200, 255, 0.8), 
+      rgba(255, 255, 255, 0.8));
 }
 
 .light-mode {
@@ -32,6 +44,7 @@ body {
   overflow-x: hidden;
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
 }
 
 .container {
@@ -65,17 +78,18 @@ body {
 }
 
 .navbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 2rem;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  z-index: 100;
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.8);
-  z-index: 100;
   transition: background 0.3s ease;
 }
 
@@ -111,6 +125,8 @@ body {
 }
 
 .nav-toggle {
+  order: 3;
+  justify-self: end;
   display: none;
   flex-direction: column;
   gap: 6px;
@@ -126,6 +142,8 @@ body {
 }
 
 .theme-toggle {
+  order: 2;
+  justify-self: center;
   background: none;
   border: none;
   cursor: pointer;
@@ -169,11 +187,15 @@ body {
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.2;
-  background: linear-gradient(45deg, var(--accent), var(--accent-2));
+  background: var(--holographic-dark);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   position: relative;
+}
+
+.light-mode .hero-title {
+  background: var(--holographic-light);
 }
 
 .hero-title::before {
@@ -305,18 +327,92 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .blog-card {
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  background: linear-gradient(45deg, 
+    rgba(0, 255, 255, 0.1), 
+    rgba(255, 0, 255, 0.1), 
+    rgba(255, 255, 0, 0.1), 
+    rgba(0, 255, 255, 0.1));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.light-mode .blog-card {
+  background: linear-gradient(45deg, 
+    rgba(255, 255, 255, 0.8), 
+    rgba(200, 200, 255, 0.8), 
+    rgba(255, 200, 255, 0.8), 
+    rgba(255, 255, 255, 0.8));
+}
+
+.blog-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--holographic-dark);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.light-mode .blog-card::before {
+  background: var(--holographic-light);
+}
+
+.blog-card:hover::before {
+  opacity: 0.2;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
 }
 
 .blog-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 10px 10px 0 0;
+  border-radius: 15px 15px 0 0;
+}
+
+.blog-content {
+  padding: 1.5rem;
+}
+
+.blog-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.read-more {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(45deg, var(--accent), var(--accent-2));
+  border-radius: 25px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-more:hover {
+  transform: translateY(-2px);
 }
 
 .contact-content {
@@ -607,10 +703,6 @@ footer {
   transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
 
 /* Accessibility improvements */
 .sr-only {
@@ -642,7 +734,7 @@ textarea:focus {
 
 /* Improve readability in light mode */
 .light-mode body {
-  background-color: #b3b3b3;
+  background-color: #f5f5f0;
 }
 
 /* Transition for theme toggle */
@@ -654,3 +746,110 @@ footer,
 .submit-btn {
   transition: all 0.3s ease;
 }
+
+/* Blog Modal Styles */
+.blog-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--primary);
+  border-radius: 15px;
+  padding: 2rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 1rem;
+}
+
+.prev-post {
+  left: 1rem;
+}
+
+.next-post {
+  right: 1rem;
+}
+
+/* Pagination Styles */
+.blog-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-number {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.page-number.active {
+  background: var(--glass-bg);
+}
+
+/* Fix for scrolling flicker */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-y: scroll;
+}
+
