@@ -124,31 +124,45 @@
         <section id="blog" class="blog">
             <div class="container">
                 <h2 class="section-title">Latest Insights</h2>
-                <div class="blog-grid">
-                    <div class="blog-card glass-card fade-in-up">
-                        <img src="https://via.placeholder.com/400x250" alt="Leadership Strategies" class="blog-image" width="400" height="250">
+                <div id="blog-posts" class="blog-grid">
+                    <!-- Temporary blog posts -->
+                    <div class="glass-card blog-card fade-in-up" data-index="0">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" alt="The Power of Collaborative Leadership" class="blog-image">
+                        </div>
                         <div class="blog-content">
-                            <h3>5 Effective Leadership Strategies for 2024</h3>
-                            <p>Discover the top leadership strategies that will help you excel in today's dynamic business environment.</p>
+                            <h3 class="blog-title">The Power of Collaborative Leadership</h3>
+                            <p>Discover how collaborative leadership can transform your team's performance and drive innovation.</p>
                             <a href="#" class="read-more">Read More</a>
                         </div>
                     </div>
-                    <div class="blog-card glass-card fade-in-up">
-                        <img src="https://via.placeholder.com/400x250" alt="Team Building" class="blog-image" width="400" height="250">
+                    <div class="glass-card blog-card fade-in-up" data-index="1">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" alt="Building Trust in Remote Teams" class="blog-image">
+                        </div>
                         <div class="blog-content">
-                            <h3>The Power of Team Building in Remote Work</h3>
-                            <p>Learn how to foster strong team connections and collaboration in a remote work setting.</p>
+                            <h3 class="blog-title">Building Trust in Remote Teams</h3>
+                            <p>Learn effective strategies to foster trust and connection in distributed work environments.</p>
                             <a href="#" class="read-more">Read More</a>
                         </div>
                     </div>
-                    <div class="blog-card glass-card fade-in-up">
-                        <img src="https://via.placeholder.com/400x250" alt="Conflict Resolution" class="blog-image" width="400" height="250">
+                    <div class="glass-card blog-card fade-in-up" data-index="2">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&w=400&q=80" alt="The Art of Giving and Receiving Feedback" class="blog-image">
+                        </div>
                         <div class="blog-content">
-                            <h3>Mastering Conflict Resolution in the Workplace</h3>
-                            <p>Explore effective techniques for addressing and resolving conflicts to create a harmonious work environment.</p>
+                            <h3 class="blog-title">The Art of Giving and Receiving Feedback</h3>
+                            <p>Master the skills of constructive feedback to improve team communication and performance.</p>
                             <a href="#" class="read-more">Read More</a>
                         </div>
                     </div>
+                </div>
+                <div class="blog-pagination">
+                    <button id="prev-page" class="pagination-btn" disabled>Previous</button>
+                    <div class="page-numbers">
+                        <span class="page-number active">1</span>
+                    </div>
+                    <button id="next-page" class="pagination-btn">Next</button>
                 </div>
             </div>
         </section>
@@ -234,6 +248,17 @@
         </div>
     </footer>
 
+    <!-- Blog Modal -->
+    <div id="blog-modal" class="blog-modal">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close">&times;</button>
+            <div id="modal-body"></div>
+            <button id="prev-post" class="modal-nav prev-post">&lt;</button>
+            <button id="next-post" class="modal-nav next-post">&gt;</button>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
+
